@@ -1,35 +1,15 @@
 {
-  "name": "pizza-me",
+  "name": "bitcamp2017",
   "version": "1.0.0",
-  "description": "Order pizza from anywhere, from everywhere",
-  "main": "server.js",
+  "description": "bitcamp hack",
+  "main": "main.js",
   "scripts": {
-    "build-css": "stylus source/stylesheets/index.styl -o static/css",
-    "watch-css": "stylus source/stylesheets/index.styl -o static/css -w",
-    "clean": "rm -rf static/css && mkdir -p static/css",
-    "build": "npm run clean && npm run build-css",
-    "watch": "npm run clean && npm run watch-css & nodemon server -e js,jade",
-    "start": "nodemon server"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aalbertjay/pizza-me.git"
-  },
-  "keywords": [
-    "pizza",
-    "bitcamp"
-  ],
-  "author": "Albert Wang",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/aalbertjay/pizza-me/issues"
-  },
-  "homepage": "https://github.com/aalbertjay/pizza-me#readme",
   "dependencies": {
     "express": "^4.15.2",
-    "jade": "^1.11.0",
-    "morgan": "^1.8.1",
-    "nodemon": "^1.9.2",
-    "stylus": "^0.54.5"
+    "nodemon": "^1.9.2"
   }
 }
