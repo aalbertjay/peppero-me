@@ -1,5 +1,4 @@
 var pizzapi = require('pizzapi');
-var map;
 
 var davidHsu = new pizzapi.Customer({
    address: '7030 Preinkert Dr., College Park, MD, 20742',
@@ -11,7 +10,7 @@ var davidHsu = new pizzapi.Customer({
 
 /*Creates the map using the Google Maps API*/
 function initMap() {
-   map = new google.maps.Map(document.getElementById('map'), {
+   var map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 38.8977, lng: 77.0365},
       zoom: 18,
       zoomControl: true,
@@ -39,6 +38,12 @@ function initMap() {
       // Browser doesn't support Geolocation
       handleLocationError(false);
     }
+
+      var geocoder = new google.maps.Geocoder();
+      document.getElementById('submit').addEventListener('click', function() {
+         findStores(map, geocoder, customer);
+      });
+
 }
 
 /*Drops a pizza marker on the map at the specified location*/
@@ -56,9 +61,9 @@ function dropPizza(pos) {
 }
 
 
-//function findStores(customer) {
+function findStores(map, geocoder, customer) {
    pizzapi.Util.findNearbyStores(
-      davidHsu.address,
+      customer.address,
       'Delivery',
       function(storeData) {
          storeData.result.Stores.forEach(function(entry) {
@@ -68,7 +73,7 @@ function dropPizza(pos) {
 
             console.log(entry.AddressDescription);
 
-            var pos = getPos(entry.AddressDescription);
+            var pos = getPos(geocoder, entry.AddressDescription);
 
             dropPizza(pos);
 
@@ -85,9 +90,25 @@ function dropPizza(pos) {
 
          });
       //console.log('\n\n##################\nNearby Stores\n##################\n\n',storeData.result.Stores);
-   }
-);
-//}
+      }
+   );
+}
+
+function getPos(geocoder, address) {
+   var street = address.substring(0, leng.search("\n"));
+   var city = leng.substring(leng.search("\n") + 1);
+   //var city = second.substring(0, second.search(/[0-9]/));
+   var parsedAddress = street + ", " + city;
+
+   geocoder.geocode({'address': parsedAddress}, function(results, status) {
+      if (status == 'OK') {
+         return results[0].geometry.location;
+      } else {
+         alert("Geocode not successful");
+      }
+   })
+}
+
 function makeOrder(storeID) {
    var order = new pizzapi.Order({
       customer: davidHsu,
