@@ -18,6 +18,7 @@ var davidHsu = new pizzapi.Customer({
 var pos;
 var allPizzas = new Array();
 var task;
+var port = process.env.PORT || 8080;
 
 var app = express();
 app.use('/', express.static(__dirname + '/html'));
@@ -30,8 +31,8 @@ app.get('/', function(req, res) {
    })
 })
 
-app.listen(8080, function() {
-   console.log("listening on 8080");
+app.listen(port, function() {
+   console.log("listening on " + port);
 })
 
 app.get('/process_get', function(req, res) {
