@@ -1,0 +1,4 @@
+redirect_from: "peppero.me"
+
+gems:
+  - jekyll-redirect-from
