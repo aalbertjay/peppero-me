@@ -1,8 +1,8 @@
 /*Creates the map using the Google Maps API*/
 function initMap() {
    var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 38.8977, lng: 77.0365},
-      zoom: 18,
+      center: {lat: 38.8977, lng: -77.0365},
+      zoom: 15,
       zoomControl: true,
       zoomControlOptions: {
           position: google.maps.ControlPosition.TOP_RIGHT
@@ -29,20 +29,27 @@ function initMap() {
       handleLocationError(false);
     }
 
-      document.getElementById('submit').addEventListener('click', function() {
-         findStores(map, davidHsu);
-      });
+       $.ajax({
+          type: 'GET',
+          url: 'http://localhost:8080/process_get',
+          success: function(data) {
+             console.log("First Data:" + data);
+             var obj = JSON.parse(data);
+             console.log("Ob: " + obj[0].lat);
+             getPizzaLocations(obj, map);
+          }
+       });
 
 }
 
-function getPizzaLocations(allPizzas) {
-   allPizzas.foreach(function(entry) {
-      dropPizza(entry);
-   });
+function getPizzaLocations(allPizzas, map) {
+   for(var entry = 0; entry < allPizzas.length; entry++) {
+      dropPizza(map, allPizzas[entry]);
+   }
 }
 
 //*Drops a pizza marker on the map at the specified location*/
-function dropPizza(pos) {
+function dropPizza(map, pos) {
   var pizza = 'images/pizza.png';
   var timestamp = new Date().getTime();
   var marker = new google.maps.Marker({
@@ -51,6 +58,7 @@ function dropPizza(pos) {
     timestamp: timestamp,
     animation: google.maps.Animation.DROP,
     title: 'Itza Pizza!',
-    icon: pizzza,
+    icon: pizza,
+    size: 0.25
   });
 }
