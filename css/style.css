@@ -1,0 +1,162 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f0eb;
+  background-image: url("bg.jpg");
+  background-size: cover;
+  overflow:hidden;
+  position: relative;
+  z-index: 1;
+}
+body #map {
+   width: 100%;
+   height: 100%;
+   background-color: grey;
+   position: fixed;
+   z-index: 0;
+ }
+body #wrapper {
+  display: inline-block;
+  padding: 20px 20px;
+  overflow: hidden;
+  background: #f13c46;
+  box-shadow: 0px 0px 0px 5px #f1f0eb, 0px 0px 0px 10px #f13c46;
+}
+
+body #wrapper.dark .button:before {
+  z-index: 2;
+  opacity: 1;
+}
+
+body #wrapper.dark .button:after {
+  opacity: 1;
+}
+
+body #wrapper .button {
+  font-family: "Bungee Outline", cursive;
+  font-size: 35px;
+  color: #f1f0eb;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 20px 20px;
+  z-index: 2;
+}
+
+body #wrapper .button:after {
+  content: '';
+  position: absolute;
+  width: calc(100% + 50px);
+  height: calc(100% + 20px);
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  opacity: 0;
+  transition: 0.5s;
+  background: repeating-linear-gradient(45deg, #f1f0eb, #f1f0eb 10px, #f13c46 10px, #f13c46 11px);
+  background-position: 0px 0px;
+  background-repeat: repeat-x;
+  animation: partyTime 40s linear infinite;
+}
+
+@keyframes partyTime {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 1000px 0;
+  }
+}
+
+body #wrapper .button:before {
+  content: 'HOORAY!';
+  font-family: "Bungee Shade", cursive;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  color: #f13c46;
+  z-index: -1;
+  opacity: 0;
+  transition: 0.5s;
+  background: #f1f0eb;
+}
+
+body #wrapper .blip {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  display: block;
+  z-index: 1;
+  opacity: 1;
+  background: #f1f0eb;
+  animation: blip 3s ease-out forwards;
+}
+
+@keyframes blip {
+  0% {
+    opacity: 0;
+  }
+
+  2.5% {
+    opacity: 1;
+    box-shadow: 0px 0px 0px 0px #f1f0eb;
+    animation-timing-function: ease-in-out;
+
+  }
+
+/*  20% {
+    opacity: 1;
+    box-shadow: 0px 0px 0px 0px #f1f0eb;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-timing-function: ease-in-out;
+
+  }
+
+  40% {
+    opacity: 1;
+    box-shadow: 0px 0px 0px 0px #f1f0eb;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    animation-timing-function: ease-in;
+    -webkit-animation-timing-function: ease-in-out;
+
+
+  }
+  60% {
+    opacity: 1;
+    box-shadow: 0px 0px 0px 0px #f1f0eb;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    animation-timing-function: ease-in;
+    -webkit-animation-timing-function: ease-in-out;
+
+
+  }
+*/
+
+  99% {
+    opacity: 1;
+    box-shadow: 0px 0px 0px 1100px #f1f0eb;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    animation-timing-function: ease-in;
+    -webkit-animation-timing-function: ease-in-out;
+
+
+  }
+
+  100% {
+    opacity: 0;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
