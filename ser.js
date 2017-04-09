@@ -19,37 +19,31 @@ var davidHsu = new pizzapi.Customer({
 
 var pos;
 var allPizzas = new Array();
-var task;
-function taskComplete(returnCallback) {
-   task--;
 
-   if(tasks <= 0) {
-      returnCallback();
-   }
-}
-
-function findStores(customer, returnCallback) {
+function findStores(customer) {
+   //var allPizzas = new Array();
    pizzapi.Util.findNearbyStores(
       customer.address,
       'Delivery',
       function(storeData) {
-         task = storeData.result.Stores.length;
-         storeData.result.Stores.forEach(function(entry) {
-            var mystore = new pizzapi.Store({
-               ID: entry.StoreID
-            });
 
-            var posGet = getPos(entry.AddressDescription, returnCallback, taskComplete);
-            //console.log("Got pos: " + posGet);
+         for(var entry = 0; entry < storeData.result.Stores.length; entry++) {
+            var curEntry = storeData.result.Stores[entry];
+            console.log("cur entry: " + curEntry);
 
-            var order = makeOrder(mystore.ID);
+            var posGet = getPos(curEntry.AddressDescription);
 
-         });
+            var order = makeOrder(curEntry.StoreID);
+
+         }
+
+         console.log("All PIZZZAAAAS: " + allPizzas);
       }
    );
+   //return allPizzas;
 }
 
-function getPos(address, returnCallback, taskComplete) {
+function getPos(address) {
    var street = address.substring(0, address.search("\n"));
    var city = address.substring(address.search("\n") + 1);
    //var city = second.substring(0, second.search(/[0-9]/));
@@ -59,7 +53,6 @@ function getPos(address, returnCallback, taskComplete) {
       //console.log("Pos: " + pos);
       allPizzas.push(pos);
       console.log("All pizzas: " + allPizzas);
-      taskComplete(returnCallback);
    });
 
    //console.log("Position to return: " + posToReturn);
@@ -129,11 +122,8 @@ app.listen(8080, function() {
 })
 
 app.get('/process_get', function(req, res) {
-   findStores(davidHsu, function() {
-      var response = allPizzas;
-      console.log("END: " + response);
-      //console.log("Begin the responses")
-      //console.log(response);
-      res.end(JSON.stringify(response));
-   });
+   response = findStores(davidHsu);
+   //console.log("Begin the responses")
+   //console.log(response);
+   res.end(JSON.stringify(response));
 })
